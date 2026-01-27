@@ -729,26 +729,14 @@ body {
     color: #FFC107;
 }
 
-/* Breathing Animation for Clickable Elements */
+/* Hover Effect for Interactive Elements */
 .clickable-element {
-    animation: breathing 2s ease-in-out infinite;
-    border: 2px dashed #ff4444 !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .clickable-element:hover {
-    animation: none;
-    box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
-}
-
-@keyframes breathing {
-    0%, 100% {
-        border-color: #ff4444;
-        opacity: 1;
-    }
-    50% {
-        border-color: #ff8888;
-        opacity: 0.7;
-    }
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive Design */
