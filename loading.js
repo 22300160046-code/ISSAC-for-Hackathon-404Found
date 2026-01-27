@@ -1,4 +1,4 @@
-// Simulate dynamic loading process
+// Simulate dynamic loading process with 30 seconds duration
 const stream1Tasks = document.querySelectorAll('#stream1 .task-item');
 const stream2Tasks = document.querySelectorAll('#stream2 .task-item');
 const stream3Tasks = document.querySelectorAll('#stream3 .task-item');
@@ -22,7 +22,7 @@ function updateProgress() {
     if (currentProgress >= 100) {
         setTimeout(() => {
             window.location.href = 'result.html';
-        }, 1000);
+        }, 500);
     }
 }
 
@@ -34,6 +34,10 @@ function completeTask(taskElement) {
     completedTasks++;
     updateProgress();
 }
+
+// Calculate interval timing for 30 seconds total
+// Each stream has ~13 tasks, we want to complete in ~30 seconds
+// 30000ms / 13 tasks ≈ 2300ms per task (with some variation)
 
 // Simulate stream 1 progress
 let stream1Index = 3; // Start from first pending task
@@ -50,9 +54,9 @@ const stream1Interval = setInterval(() => {
     } else {
         clearInterval(stream1Interval);
     }
-}, 800);
+}, 2200);
 
-// Simulate stream 2 progress
+// Simulate stream 2 progress (slightly different timing)
 let stream2Index = 4;
 const stream2Interval = setInterval(() => {
     if (stream2Index < stream2Tasks.length) {
@@ -67,9 +71,9 @@ const stream2Interval = setInterval(() => {
     } else {
         clearInterval(stream2Interval);
     }
-}, 850);
+}, 2400);
 
-// Simulate stream 3 progress
+// Simulate stream 3 progress (slightly different timing)
 let stream3Index = 2;
 const stream3Interval = setInterval(() => {
     if (stream3Index < stream3Tasks.length) {
@@ -84,7 +88,7 @@ const stream3Interval = setInterval(() => {
     } else {
         clearInterval(stream3Interval);
     }
-}, 900);
+}, 2600);
 
 // Initialize progress
 updateProgress();
