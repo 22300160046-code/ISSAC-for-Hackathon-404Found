@@ -21,7 +21,8 @@ diagram2.addEventListener('click', () => {
 
 // Open analyze modal when analyze button is clicked
 analyzeBtn.addEventListener('click', () => {
-    analyzeModal.style.display = 'block';
+    // Redirect to loading page
+    window.location.href = 'loading.html';
 });
 
 // Close modals when X is clicked
