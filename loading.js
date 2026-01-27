@@ -1,12 +1,31 @@
-// Simulate dynamic loading process with 30 seconds duration
+// Get elements
 const stream1Tasks = document.querySelectorAll('#stream1 .task-item');
 const stream2Tasks = document.querySelectorAll('#stream2 .task-item');
 const stream3Tasks = document.querySelectorAll('#stream3 .task-item');
 const progressBar = document.getElementById('progressBar');
+const cancelBtn = document.getElementById('cancelBtn');
 
 let currentProgress = 0;
 const totalTasks = stream1Tasks.length + stream2Tasks.length + stream3Tasks.length;
 let completedTasks = 0;
+let stream1Interval, stream2Interval, stream3Interval;
+
+// Cancel button click handler
+cancelBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to cancel the analysis and return to home?')) {
+        // Clear all intervals
+        clearInterval(stream1Interval);
+        clearInterval(stream2Interval);
+        clearInterval(stream3Interval);
+        
+        // Add transition animation
+        document.getElementById('loadingContent').classList.add('slide-out');
+        
+        setTimeout(() => {
+            window.location.href = 'home.html';
+        }, 500);
+    }
+});
 
 // Count initially completed tasks
 document.querySelectorAll('.task-item.completed').forEach(() => {
@@ -21,7 +40,11 @@ function updateProgress() {
     // Redirect to result page when complete
     if (currentProgress >= 100) {
         setTimeout(() => {
-            window.location.href = 'result.html';
+            document.getElementById('loadingContent').classList.add('slide-out');
+            
+            setTimeout(() => {
+                window.location.href = 'result.html';
+            }, 500);
         }, 500);
     }
 }
@@ -42,7 +65,7 @@ function completeTask(taskElement) {
 
 // Simulate stream 1 progress (start from index 3, which is the first "processing" task)
 let stream1Index = 3;
-const stream1Interval = setInterval(() => {
+stream1Interval = setInterval(() => {
     if (stream1Index < stream1Tasks.length) {
         completeTask(stream1Tasks[stream1Index]);
         stream1Index++;
@@ -53,7 +76,7 @@ const stream1Interval = setInterval(() => {
 
 // Simulate stream 2 progress (start from index 4, which is the first "processing" task)
 let stream2Index = 4;
-const stream2Interval = setInterval(() => {
+stream2Interval = setInterval(() => {
     if (stream2Index < stream2Tasks.length) {
         completeTask(stream2Tasks[stream2Index]);
         stream2Index++;
@@ -64,7 +87,7 @@ const stream2Interval = setInterval(() => {
 
 // Simulate stream 3 progress (start from index 2, which is the first "processing" task)
 let stream3Index = 2;
-const stream3Interval = setInterval(() => {
+stream3Interval = setInterval(() => {
     if (stream3Index < stream3Tasks.length) {
         completeTask(stream3Tasks[stream3Index]);
         stream3Index++;
@@ -75,3 +98,8 @@ const stream3Interval = setInterval(() => {
 
 // Initialize progress
 updateProgress();
+
+// Page transition animation on load
+window.addEventListener('load', () => {
+    document.getElementById('loadingContent').classList.add('slide-in');
+});

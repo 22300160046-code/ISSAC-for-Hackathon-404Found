@@ -23,5 +23,15 @@ window.addEventListener('click', (e) => {
 
 // Navigate to home page when next button is clicked
 nextBtn.addEventListener('click', () => {
-    window.location.href = 'home.html';
+    modal.style.display = 'none';
+    document.getElementById('loginContent').classList.add('slide-out');
+    
+    setTimeout(() => {
+        window.location.href = 'home.html';
+    }, 500);
+});
+
+// Page transition animation on load
+window.addEventListener('load', () => {
+    document.getElementById('loginContent').classList.add('slide-in');
 });

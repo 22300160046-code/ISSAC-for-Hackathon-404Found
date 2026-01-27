@@ -789,3 +789,546 @@ body {
         width: 100%;
     }
 }
+
+
+/* ========================================
+   Page Transition Animations
+   ======================================== */
+
+/* Fixed prism position for all pages */
+.prism-fixed {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.prism-fixed .prism-image-small {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+}
+
+/* Page content animations */
+.page-content {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.page-content.slide-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-content.slide-out {
+    opacity: 0;
+    transform: translateY(-50px);
+}
+
+/* ========================================
+   Home Page New Layout
+   ======================================== */
+
+.home-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 250px;
+}
+
+/* AI Agents Section */
+.agents-section {
+    margin: 40px 0;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+.agents-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.agent-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.agent-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(82, 196, 26, 0.2);
+    border-color: rgba(82, 196, 26, 0.5);
+}
+
+.agent-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+    border: 2px solid rgba(82, 196, 26, 0.3);
+}
+
+.agent-name {
+    font-size: 0.9rem;
+    color: #ccc;
+    font-weight: 300;
+}
+
+/* Diagrams Section */
+.diagrams-section {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+    justify-content: center;
+}
+
+.diagram-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    max-width: 300px;
+}
+
+.diagram-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+.diagram-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.diagram-label {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+/* Input Section */
+.input-section {
+    margin: 40px 0;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: rgba(82, 196, 26, 0.5);
+}
+
+.url-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 0.95rem;
+    padding: 12px 20px;
+}
+
+.url-input::placeholder {
+    color: #666;
+}
+
+.attach-btn {
+    background: rgba(82, 196, 26, 0.1);
+    border: 1px solid rgba(82, 196, 26, 0.3);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #52C41A;
+}
+
+.attach-btn:hover {
+    background: rgba(82, 196, 26, 0.2);
+    transform: scale(1.1);
+}
+
+.analyze-button {
+    background: linear-gradient(135deg, #52C41A 0%, #73D13D 100%);
+    border: none;
+    border-radius: 50px;
+    padding: 15px 50px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.analyze-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(82, 196, 26, 0.4);
+}
+
+/* Upload Modal Styles */
+.upload-area {
+    border: 2px dashed #444;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: #52C41A;
+    background: rgba(82, 196, 26, 0.05);
+}
+
+.upload-area svg {
+    margin-bottom: 15px;
+    color: #52C41A;
+}
+
+.upload-area p {
+    margin: 10px 0;
+    color: #ccc;
+}
+
+/* ========================================
+   Loading Page Updates
+   ======================================== */
+
+.loading-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 250px;
+}
+
+/* Cancel Button */
+.cancel-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 77, 79, 0.1);
+    border: 1px solid rgba(255, 77, 79, 0.3);
+    border-radius: 50px;
+    padding: 10px 20px;
+    color: #FF4D4F;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    z-index: 1001;
+}
+
+.cancel-btn:hover {
+    background: rgba(255, 77, 79, 0.2);
+    transform: scale(1.05);
+}
+
+/* ========================================
+   Result Page New Layout
+   ======================================== */
+
+.result-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 250px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 12px 25px;
+    color: #ffffff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+}
+
+.export-btn:hover {
+    border-color: rgba(82, 196, 26, 0.5);
+    background: rgba(82, 196, 26, 0.1);
+}
+
+.home-btn:hover {
+    border-color: rgba(24, 144, 255, 0.5);
+    background: rgba(24, 144, 255, 0.1);
+}
+
+/* Evaluation Dashboard */
+.evaluation-dashboard {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.metrics-panel,
+.judges-panel {
+    margin-bottom: 50px;
+}
+
+.panel-title {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #ffffff;
+}
+
+/* New Metrics Grid */
+.metrics-grid-new {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.metric-card-new {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.metric-card-new:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.metric-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.metric-content {
+    text-align: center;
+    width: 100%;
+}
+
+.metric-name {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.metric-score {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.metric-unit {
+    font-size: 1.5rem;
+    font-weight: 400;
+    opacity: 0.6;
+}
+
+.metric-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.metric-bar-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 1s ease;
+}
+
+.metric-label {
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* New Judges Grid */
+.judges-grid-new {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.judge-card-new {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    gap: 20px;
+}
+
+.judge-card-new:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(82, 196, 26, 0.2);
+    border-color: rgba(82, 196, 26, 0.3);
+}
+
+.judge-avatar-new {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.judge-avatar-new img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(82, 196, 26, 0.3);
+}
+
+.judge-score-badge {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #52C41A 0%, #73D13D 100%);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+    border: 2px solid #000000;
+}
+
+.judge-details {
+    flex: 1;
+}
+
+.judge-name-new {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.judge-title-new {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.judge-preview {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Judge Modal Header */
+.judge-modal-header {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.judge-modal-header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(82, 196, 26, 0.5);
+}
+
+.judge-modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.judge-modal-header p {
+    margin: 5px 0;
+}

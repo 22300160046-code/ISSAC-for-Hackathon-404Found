@@ -1,8 +1,8 @@
 // Get elements
 const exportBtn = document.getElementById('exportBtn');
 const homeBtn = document.getElementById('homeBtn');
-const scoreCards = document.querySelectorAll('.score-card');
-const judgeCards = document.querySelectorAll('.judge-card');
+const metricCards = document.querySelectorAll('.metric-card-new');
+const judgeCards = document.querySelectorAll('.judge-card-new');
 const metricModal = document.getElementById('metricModal');
 const judgeModal = document.getElementById('judgeModal');
 const metricClose = document.getElementById('metricClose');
@@ -11,63 +11,67 @@ const judgeClose = document.getElementById('judgeClose');
 // Metric details data
 const metricDetails = {
     'code-quality': {
-        title: '代码质量评估',
-        detail: '该项目的代码质量得分为87%，表现优秀。主要优势包括：\n\n1. 代码结构清晰，模块化设计良好\n2. 遵循最佳实践和编码规范\n3. 测试覆盖率达到85%以上\n4. 文档完善，注释详细\n5. 代码复用性高，耦合度低\n\n改进建议：\n- 部分复杂函数可以进一步拆分\n- 可以增加更多的边界情况测试'
+        title: 'Code Quality Assessment',
+        detail: 'The project achieved a code quality score of 87%, demonstrating excellent performance. Key strengths include:\n\n1. Clear code structure with well-designed modularity\n2. Adherence to best practices and coding standards\n3. Test coverage exceeding 85%\n4. Comprehensive documentation with detailed comments\n5. High code reusability with low coupling\n\nImprovement suggestions:\n- Some complex functions could be further decomposed\n- Additional edge case testing could be beneficial'
     },
     'business-potential': {
-        title: '商业潜力评估',
-        detail: '该项目的商业潜力得分为92%，前景广阔。主要亮点包括：\n\n1. 市场需求明确，目标用户群体清晰\n2. 商业模式可行，变现路径明确\n3. 竞争优势显著，差异化定位准确\n4. 可扩展性强，增长潜力大\n5. 团队背景优秀，执行力强\n\n市场机会：\n- 目标市场规模达到50亿美元\n- 年增长率预计超过30%'
+        title: 'Business Potential Assessment',
+        detail: 'The project scored 92% in business potential, indicating promising prospects. Key highlights include:\n\n1. Clear market demand with well-defined target audience\n2. Viable business model with clear monetization path\n3. Significant competitive advantages with accurate differentiation\n4. Strong scalability with high growth potential\n5. Excellent team background with strong execution capability\n\nMarket opportunity:\n- Target market size reaches $5 billion\n- Annual growth rate expected to exceed 30%'
     },
     'technical-innovation': {
-        title: '技术创新性评估',
-        detail: '该项目的技术创新性得分为85%，创新点突出。主要特色包括：\n\n1. 采用了最新的技术栈和架构模式\n2. 算法设计新颖，性能优化出色\n3. 解决了行业痛点问题\n4. 技术实现难度较高，壁垒明显\n5. 具备技术领先性和前瞻性\n\n创新亮点：\n- 独创的分布式处理架构\n- 创新的AI模型训练方法'
+        title: 'Technical Innovation Assessment',
+        detail: 'The project achieved 85% in technical innovation, with outstanding innovative features. Key characteristics include:\n\n1. Adoption of latest technology stack and architectural patterns\n2. Novel algorithm design with excellent performance optimization\n3. Addresses industry pain points effectively\n4. High technical implementation difficulty creating clear barriers\n5. Technical leadership and forward-thinking approach\n\nInnovation highlights:\n- Proprietary distributed processing architecture\n- Innovative AI model training methodology'
     }
 };
 
 // Judge full comments data
 const judgeComments = {
     'paul-graham': {
-        name: 'Paul Graham',
-        title: 'Y Combinator',
+        name: 'Dr. Alex Chen',
+        title: 'AI Research Lead',
         score: '85.82',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Paul',
-        comment: '这个项目展现了出色的技术架构和清晰的商业逻辑。从创业的角度来看，团队对市场的理解非常深刻，产品定位精准。代码质量达到了YC项目的平均水平以上，特别是在用户体验和性能优化方面做得很好。\n\n我特别欣赏团队在MVP阶段就考虑到了可扩展性，这说明他们有长远的规划。商业模式清晰，变现路径明确，这在早期项目中并不常见。\n\n建议团队在接下来的发展中，重点关注用户增长和市场推广，技术基础已经打得很扎实了。'
+        avatar: 'images/avatar1.png',
+        comment: 'This project demonstrates exceptional technical architecture and clear business logic. From an entrepreneurial perspective, the team shows deep market understanding with precise product positioning. Code quality exceeds average standards, particularly in user experience and performance optimization.\n\nI especially appreciate that the team considered scalability during the MVP stage, indicating long-term planning. The business model is clear with well-defined monetization paths, which is uncommon in early-stage projects.\n\nI recommend the team focus on user growth and market promotion in the next phase, as the technical foundation is already solid.'
     },
     'andrew-ng': {
-        name: 'Andrew Ng',
-        title: 'Deeplearning.ai',
+        name: 'Dr. Sarah Kim',
+        title: 'ML Systems Architect',
         score: '85.28',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Andrew',
-        comment: '从机器学习的角度来看，该项目的算法设计非常合理。模型训练流程规范，数据处理管道完善，特征工程做得很细致。\n\n特别值得称赞的是，团队在模型可解释性方面做了很多工作，这在实际应用中非常重要。性能指标也达到了行业领先水平。\n\n建议在模型部署和监控方面再加强一些，确保生产环境的稳定性。整体来说，这是一个技术实力很强的项目。'
+        avatar: 'images/avatar2.png',
+        comment: 'From a machine learning perspective, the algorithm design is remarkably sound. The model training process is well-structured, data processing pipeline is comprehensive, and feature engineering is meticulously executed.\n\nParticularly commendable is the team\'s extensive work on model interpretability, which is crucial for practical applications. Performance metrics also reach industry-leading levels.\n\nI suggest strengthening model deployment and monitoring to ensure production environment stability. Overall, this is a project with strong technical capabilities.'
     },
     'sam-altman': {
-        name: 'Sam Altman',
-        title: 'OpenAI',
+        name: 'Dr. Marcus Rivera',
+        title: 'Innovation Director',
         score: '86.94',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sam',
-        comment: '这是一个具有变革潜力的项目，技术实现扎实。从OpenAI的视角来看，项目在AI技术的应用上很有创新性，特别是在提示工程和模型微调方面。\n\n团队对AGI时代的发展趋势有很好的把握，产品设计考虑到了未来的技术演进。商业价值明确，市场时机把握得很好。\n\n建议团队保持技术领先性，持续关注最新的AI研究进展，将前沿技术快速应用到产品中。这个项目有成为独角兽的潜力。'
+        avatar: 'images/avatar3.png',
+        comment: 'A project with transformative potential and solid technical implementation. From an innovation perspective, the project shows creativity in AI technology application, particularly in prompt engineering and model fine-tuning.\n\nThe team demonstrates excellent grasp of AGI era development trends, with product design considering future technological evolution. Business value is clear with well-timed market entry.\n\nI recommend maintaining technical leadership, continuously monitoring latest AI research developments, and rapidly applying cutting-edge technology to the product. This project has unicorn potential.'
     },
     'feifei-li': {
-        name: 'Feifei Li',
-        title: 'ImageNet',
+        name: 'Dr. Maya Patel',
+        title: 'Computer Vision Expert',
         score: '86.53',
-        avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Feifei',
-        comment: '项目在计算机视觉领域的应用前景广阔，代码质量优秀。数据集的构建和标注工作做得很专业，模型架构设计合理。\n\n我特别欣赏团队在数据多样性和模型泛化能力方面的努力，这对于实际应用至关重要。评估指标全面，实验设计严谨。\n\n建议在跨领域迁移学习方面做更多探索，这将大大提升项目的应用范围。整体来说，这是一个学术和工程结合得很好的项目。'
+        avatar: 'images/avatar4.png',
+        comment: 'The application prospects in computer vision are extensive, with excellent code quality. Dataset construction and annotation work are professionally executed, and model architecture design is well-reasoned.\n\nI particularly appreciate the team\'s efforts in data diversity and model generalization capability, which are crucial for practical applications. Evaluation metrics are comprehensive, and experimental design is rigorous.\n\nI suggest more exploration in cross-domain transfer learning, which would significantly expand the project\'s application scope. Overall, this is a project that successfully combines academic rigor with engineering excellence.'
     }
 };
 
 // Export button click
 exportBtn.addEventListener('click', () => {
-    alert('评估结果已导出！（演示功能）');
+    alert('Evaluation report exported successfully! (Demo feature)');
 });
 
 // Home button click
 homeBtn.addEventListener('click', () => {
-    window.location.href = 'home.html';
+    document.getElementById('resultContent').classList.add('slide-out');
+    
+    setTimeout(() => {
+        window.location.href = 'home.html';
+    }, 500);
 });
 
-// Score card click
-scoreCards.forEach(card => {
+// Metric card click
+metricCards.forEach(card => {
     card.addEventListener('click', () => {
         const metric = card.dataset.metric;
         const data = metricDetails[metric];
@@ -85,7 +89,7 @@ judgeCards.forEach(card => {
         document.getElementById('judgeModalAvatar').src = data.avatar;
         document.getElementById('judgeModalName').textContent = data.name;
         document.getElementById('judgeModalTitle').textContent = data.title;
-        document.getElementById('judgeModalScore').textContent = '评分: ' + data.score;
+        document.getElementById('judgeModalScore').textContent = 'Score: ' + data.score;
         document.getElementById('judgeModalComment').textContent = data.comment;
         judgeModal.style.display = 'block';
     });
@@ -108,4 +112,9 @@ window.addEventListener('click', (e) => {
     if (e.target === judgeModal) {
         judgeModal.style.display = 'none';
     }
+});
+
+// Page transition animation on load
+window.addEventListener('load', () => {
+    document.getElementById('resultContent').classList.add('slide-in');
 });
