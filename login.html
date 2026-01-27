@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISSAC - Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+    <div class="container">
+        <h1 class="main-title">ISSAC helps you evaluate the value of open-source projects.</h1>
+        
+        <div class="prism-container">
+            <img src="images/prism.jpg" alt="Prism" class="prism-image">
+        </div>
+        
+        <button class="login-button" id="loginBtn">
+            <span>点击登录以继续</span>
+            <div class="login-icons">
+                <img src="https://img.icons8.com/color/48/wechat--v1.png" alt="WeChat" class="icon">
+                <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google" class="icon">
+            </div>
+        </button>
+        
+        <div class="description">
+            <p>ISSAC是一个开源项目AI评估引擎</p>
+            <p>它通过分析项目文档和代码质量来评估项目全景</p>
+            <p>并通过全球行业领袖AI验证模型AI验证模型评估价值和反馈</p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>登录</h2>
+            <div class="modal-body">
+                <p>欢迎使用 ISSAC</p>
+                <div class="login-options">
+                    <button class="modal-login-btn wechat">
+                        <img src="https://img.icons8.com/color/48/wechat--v1.png" alt="WeChat">
+                        <span>微信登录</span>
+                    </button>
+                    <button class="modal-login-btn google">
+                        <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google">
+                        <span>Google登录</span>
+                    </button>
+                </div>
+                <button class="next-button" id="nextBtn">下一步</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
