@@ -577,14 +577,18 @@ body {
 }
 
 .modal-content {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    border-radius: 20px;
-    padding: 40px;
-    max-width: 600px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 2px solid;
+    border-image: linear-gradient(135deg, #a855f7, #ec4899) 1;
+    border-radius: 24px;
+    padding: 50px;
+    max-width: 900px;
     width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
     position: relative;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 30px 80px rgba(168, 85, 247, 0.3), 0 0 40px rgba(236, 72, 153, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .modal-close {
@@ -602,15 +606,22 @@ body {
 }
 
 .modal-content h3 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #ffffff;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .modal-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #d0d0d0;
+    font-size: 1.15rem;
+    line-height: 2;
+    color: #e0e0e0;
+    text-align: justify;
+    white-space: pre-wrap;
 }
 
 /* Responsive Design */
