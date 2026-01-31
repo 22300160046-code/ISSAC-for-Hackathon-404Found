@@ -111,25 +111,83 @@ function showScoreDetail(type) {
     
     const details = {
         code: {
-            title: '💻 Code Quality - 87%',
-            content: 'This project demonstrates exceptional code quality with well-structured architecture, comprehensive test coverage, and adherence to best practices. The codebase is maintainable, scalable, and follows industry standards. Key strengths include: clean code principles, effective error handling, comprehensive documentation, and efficient algorithms. Areas for improvement include: increasing test coverage in edge cases and optimizing some database queries.'
+            title: '💻 Code Quality',
+            score: 87,
+            metrics: [
+                { name: '代码架构', score: 90, desc: '模块化设计清晰,采用分层架构,核心预测引擎与数据处理层分离良好' },
+                { name: '代码规范', score: 85, desc: '遵循PEP 8规范,命名规范统一,注释覆盖率70%' },
+                { name: '测试覆盖', score: 82, desc: '单元测试覆盖率78%,集成测试完整,但边界情况测试可加强' },
+                { name: '文档质量', score: 88, desc: 'README详尽,API文档完整,提供多个使用示例和教程' },
+                { name: '依赖管理', score: 90, desc: 'requirements.txt清晰,版本锁定合理,无已知安全漏洞' },
+                { name: '性能优化', score: 86, desc: '支持批量处理和并行计算,内存使用优化良好' }
+            ]
         },
         business: {
-            title: '💼 Business Potential - 78%',
-            content: 'The project shows strong business potential with a clear value proposition and market fit. The solution addresses a real pain point in the industry and has a viable monetization strategy. Key strengths include: large target market, competitive advantages, scalable business model, and strong user demand. Areas for improvement include: clearer go-to-market strategy, more detailed financial projections, and stronger competitive analysis.'
+            title: '💼 Business Potential',
+            score: 78,
+            metrics: [
+                { name: '市场需求', score: 85, desc: '时序预测是金融、零售、能源等多个行业的刚需' },
+                { name: '竞争优势', score: 75, desc: '自动化特征工程是亮点,但面临Prophet、ARIMA等成熟工具的竞争' },
+                { name: '商业模式', score: 72, desc: '开源+云服务的混合模式可行,但需要明确的变现路径' },
+                { name: '用户获取', score: 78, desc: 'GitHub星标增长稳定,社区活跃度中等' },
+                { name: '可扩展性', score: 82, desc: '架构支持水平扩展,可集成到企业级数据平台' },
+                { name: '团队能力', score: 76, desc: '核心团队技术能力强,但商业运营经验有待提升' }
+            ]
         },
         innovation: {
-            title: '🚀 Technical Innovation - 85%',
-            content: 'This project showcases impressive technical innovation with novel approaches to solving complex problems. The implementation leverages cutting-edge technologies and demonstrates creative problem-solving. Key strengths include: innovative algorithms, unique architecture patterns, effective use of modern frameworks, and forward-thinking design. Areas for improvement include: more extensive performance benchmarking and exploration of additional optimization techniques.'
+            title: '🚀 Technical Innovation',
+            score: 85,
+            metrics: [
+                { name: '技术创新', score: 88, desc: '自动化模型选择和超参数调优算法具有创新性' },
+                { name: '算法优化', score: 82, desc: '在经典算法基础上进行了优化,但未提出全新的预测模型' },
+                { name: '工程创新', score: 87, desc: '流水线设计优雅,支持插件式扩展,降低了使用门槛' },
+                { name: '应用场景', score: 84, desc: '覆盖多个行业场景,提供了实际案例' },
+                { name: '前沿技术', score: 83, desc: '集成了LSTM、Transformer等深度学习模型' },
+                { name: '用户体验', score: 86, desc: 'API设计简洁直观,学习曲线平缓,可视化工具实用' }
+            ]
         },
         social: {
-            title: '🌍 Social Impact - 82%',
-            content: 'This project demonstrates significant potential for positive social impact by democratizing access to time-series prediction technology. ChronoML empowers developers, researchers, and organizations across various sectors to leverage advanced forecasting capabilities without requiring deep expertise. Key social benefits include: enabling better decision-making in healthcare, environmental monitoring, and public resource allocation; reducing barriers to AI adoption for underserved communities; promoting open-source collaboration and knowledge sharing; and supporting sustainable development goals through improved predictive analytics. The project shows strong commitment to accessibility, ethical AI practices, and creating tools that serve the broader public good.'
+            title: '🌍 Social Impact',
+            score: 82,
+            metrics: [
+                { name: '技术普惠', score: 88, desc: '大幅降低时序预测的技术门槛,让非专家也能使用' },
+                { name: '开源贡献', score: 85, desc: '代码完全开源,采用MIT许可证,鼓励社区贡献' },
+                { name: '教育价值', score: 80, desc: '提供了学习资源和教程,但系统性教育内容有待完善' },
+                { name: '社会应用', score: 84, desc: '可应用于公共卫生、环境监测、灾害预警等公益领域' },
+                { name: '伦理考量', score: 75, desc: '提供了基本的数据隐私保护,但对算法偏见的关注不足' },
+                { name: '可持续性', score: 80, desc: '项目维护活跃,社区健康,但需要更多资源支持' }
+            ]
         }
     };
     
-    title.textContent = details[type].title;
-    content.textContent = details[type].content;
+    const detail = details[type];
+    title.innerHTML = `${detail.title} <span style="color: #a855f7; font-weight: 800;">${detail.score}%</span>`;
+    
+    // 生成详细评分HTML
+    let html = '<div class="score-detail-container">';
+    
+    detail.metrics.forEach((metric, index) => {
+        const percentage = metric.score;
+        const delay = index * 0.1;
+        
+        html += `
+            <div class="metric-item" style="animation-delay: ${delay}s">
+                <div class="metric-header">
+                    <span class="metric-name">${metric.name}</span>
+                    <span class="metric-score">${metric.score}</span>
+                </div>
+                <div class="metric-bar-container">
+                    <div class="metric-bar-bg">
+                        <div class="metric-bar-fill" style="width: ${percentage}%"></div>
+                    </div>
+                </div>
+                <div class="metric-desc">${metric.desc}</div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    content.innerHTML = html;
     modal.style.display = 'flex';
 }
 

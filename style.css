@@ -431,8 +431,10 @@ body {
 
 .score-cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .score-card {
@@ -773,4 +775,121 @@ body {
     padding: 16px 45px;
     font-size: 1.05rem;
     box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+}
+
+/* Score Detail Modal Styles */
+.score-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.metric-item {
+    background: rgba(20, 20, 20, 0.5);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 12px;
+    padding: 20px;
+    animation: slideInUp 0.5s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.metric-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.metric-score {
+    font-size: 1.3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    min-width: 45px;
+    text-align: right;
+}
+
+.metric-bar-container {
+    margin-bottom: 12px;
+}
+
+.metric-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.metric-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #a855f7, #ec4899);
+    border-radius: 4px;
+    transition: width 1s ease-out;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    position: relative;
+}
+
+.metric-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.metric-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #b0b0b0;
+}
+
+/* Responsive adjustments for score detail */
+@media (max-width: 768px) {
+    .metric-item {
+        padding: 15px;
+    }
+    
+    .metric-name {
+        font-size: 1rem;
+    }
+    
+    .metric-score {
+        font-size: 1.1rem;
+    }
+    
+    .metric-desc {
+        font-size: 0.9rem;
+    }
 }
