@@ -2,10 +2,298 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=login.html">
-    <title>ISSAC</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGE - Open-Source Project Evaluation</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>正在跳转...</p>
+    <!-- Section 1: Hero -->
+    <section id="hero" class="section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <p class="subtitle">Power 404Found</p>
+                    <h1 class="hero-title">
+                        <span class="highlight">SAGE</span> helps you evaluate the value of 
+                        <span class="highlight">open-source projects</span>
+                    </h1>
+                    <div class="hero-description">
+                        <p>SAGE是一个开源项目AI评估引擎</p>
+                        <p>它通过AI分析项目文档和代码质量，评估项目商业价值</p>
+                        <p>结合AI与专家评价，为您提供全面的项目评估报告</p>
+                        <p>帮助您做出更明智的投资决策</p>
+                    </div>
+                    <button class="btn-primary" onclick="scrollToSection('learn')">Learn more</button>
+                </div>
+                <div class="hero-right">
+                    <img src="images/prism.jpg" alt="Prism" class="prism-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Learn About SAGE -->
+    <section id="learn" class="section section-dark">
+        <div class="container">
+            <p class="subtitle">Power 404Found</p>
+            <h2 class="section-title">Learn about SAGE</h2>
+            
+            <div class="learn-content">
+                <div class="learn-left">
+                    <img src="images/diagram1.png" alt="SAGE Architecture" class="diagram-image">
+                    <p class="diagram-description">了解SAGE的技术实现和价值创新</p>
+                </div>
+                
+                <div class="learn-right">
+                    <div class="judge-grid">
+                        <div class="judge-card judge-1">
+                            <img src="images/judge1.png" alt="Judge 1">
+                            <p class="judge-label">裁判1</p>
+                        </div>
+                        <div class="judge-card judge-2">
+                            <img src="images/judge2.png" alt="Judge 2">
+                            <p class="judge-label">裁判2</p>
+                        </div>
+                        <div class="judge-card judge-3">
+                            <img src="images/judge3.png" alt="Judge 3">
+                            <p class="judge-label">裁判3</p>
+                        </div>
+                        <div class="judge-card judge-4">
+                            <img src="images/judge4.png" alt="Judge 4">
+                            <p class="judge-label">裁判4</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="scrollToSection('evaluation')">START</button>
+        </div>
+    </section>
+
+    <!-- Section 3: Start Your Evaluation -->
+    <section id="evaluation" class="section section-dark">
+        <div class="container">
+            <p class="subtitle">Team 404Found</p>
+            <h2 class="section-title">Start Your Evaluation</h2>
+            <p class="section-description">
+                Please upload the GitHub repository URL and project documentation for the open-source project you wish to evaluate.
+            </p>
+            
+            <div class="input-group">
+                <input type="text" id="urlInput" class="input-field" placeholder="paste the target's URL here">
+                <button class="input-field upload-btn" onclick="openFileUpload()">
+                    <span>upload the target's PD here</span>
+                    <input type="file" id="fileInput" accept=".doc,.docx,.txt,.pdf" style="display: none;">
+                </button>
+                <button class="btn-go" onclick="scrollToSection('loading')">GO</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Loading -->
+    <section id="loading" class="section section-dark">
+        <div class="container">
+            <img src="images/prism.jpg" alt="Prism" class="loading-prism">
+            
+            <div class="loading-streams">
+                <div class="stream-box" id="stream1">
+                    <div class="stream-item pending">✓ $ a42z-engine --analyze --steps=8</div>
+                    <div class="stream-item pending">✓ Starting analysis pipeline...</div>
+                    <div class="stream-item pending">○ Code Repository Discovery</div>
+                    <div class="stream-item pending">○ Calling Claude 3.5 Sonnet...</div>
+                    <div class="stream-item pending">○ Calling Gemini 2.0 Flash...</div>
+                    <div class="stream-item pending">○ Architecture Pattern Analysis</div>
+                    <div class="stream-item pending">○ Calling Security Vulnerability Scan...</div>
+                    <div class="stream-item pending">○ Technology Stack Mapping</div>
+                    <div class="stream-item pending">○ Calling Deepseek API...</div>
+                    <div class="stream-item pending">○ Implementation Similarity Assessment</div>
+                    <div class="stream-item pending">○ Code Quality Benchmarking</div>
+                    <div class="stream-item pending">○ Performance Pattern Recognition</div>
+                    <div class="stream-item pending">○ Calling GitHub API...</div>
+                    <div class="stream-item pending">○ Security Implementation Review</div>
+                </div>
+                
+                <div class="stream-box" id="stream2">
+                    <div class="stream-item pending">✓ $ a42z-engine --analyze --steps=8</div>
+                    <div class="stream-item pending">✓ Starting analysis pipeline...</div>
+                    <div class="stream-item pending">✓ Code Repository Discovery</div>
+                    <div class="stream-item pending">✓ Calling Claude 3.5 Sonnet...</div>
+                    <div class="stream-item pending">○ Calling Gemini 2.0 Flash...</div>
+                    <div class="stream-item pending">○ Architecture Pattern Analysis</div>
+                    <div class="stream-item pending">○ Calling Security Vulnerability Scan...</div>
+                    <div class="stream-item pending">○ Technology Stack Mapping</div>
+                    <div class="stream-item pending">○ Calling Deepseek API...</div>
+                    <div class="stream-item pending">○ Implementation Similarity Assessment</div>
+                    <div class="stream-item pending">○ Code Quality Benchmarking</div>
+                    <div class="stream-item pending">○ Performance Pattern Recognition</div>
+                    <div class="stream-item pending">○ Calling GitHub API...</div>
+                    <div class="stream-item pending">○ Security Implementation Review</div>
+                </div>
+                
+                <div class="stream-box" id="stream3">
+                    <div class="stream-item pending">✓ $ a42z-engine --analyze --steps=8</div>
+                    <div class="stream-item pending">✓ Starting analysis pipeline...</div>
+                    <div class="stream-item pending">○ Code Repository Discovery</div>
+                    <div class="stream-item pending">○ Calling Claude 3.5 Sonnet...</div>
+                    <div class="stream-item pending">○ Calling Gemini 2.0 Flash...</div>
+                    <div class="stream-item pending">○ Architecture Pattern Analysis</div>
+                    <div class="stream-item pending">○ Calling Security Vulnerability Scan...</div>
+                    <div class="stream-item pending">○ Technology Stack Mapping</div>
+                    <div class="stream-item pending">○ Calling Deepseek API...</div>
+                    <div class="stream-item pending">○ Implementation Similarity Assessment</div>
+                    <div class="stream-item pending">○ Code Quality Benchmarking</div>
+                    <div class="stream-item pending">○ Performance Pattern Recognition</div>
+                    <div class="stream-item pending">○ Calling GitHub API...</div>
+                    <div class="stream-item pending">○ Calling Apify API...</div>
+                    <div class="stream-item pending">○ Technical Innovation Evaluation</div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            
+            <button class="btn-cancel" onclick="scrollToSection('hero')">放弃生成，回到首页</button>
+        </div>
+    </section>
+
+    <!-- Section 5: Results -->
+    <section id="results" class="section section-dark">
+        <div class="container">
+            <img src="images/prism.jpg" alt="Prism" class="results-prism">
+            
+            <h2 class="section-title">Evaluation Results</h2>
+            <p class="subtitle">Power 404Found</p>
+            
+            <div class="results-content">
+                <div class="results-sidebar">
+                    <button class="sidebar-btn" onclick="alert('导出功能开发中...')">
+                        <span class="icon">📥</span>
+                        <span>Export Report</span>
+                    </button>
+                    <button class="sidebar-btn" onclick="scrollToSection('hero')">
+                        <span class="icon">🏠</span>
+                        <span>Back to Home</span>
+                    </button>
+                </div>
+                
+                <div class="results-main">
+                    <div class="scores-section">
+                        <h3 class="scores-title">📊 Evaluation Scores</h3>
+                        <div class="score-cards">
+                            <div class="score-card" onclick="showScoreDetail('code')">
+                                <div class="score-header">
+                                    <span class="score-icon">💻</span>
+                                    <span class="score-name">Code Quality</span>
+                                </div>
+                                <div class="score-value">87%</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 87%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-card" onclick="showScoreDetail('business')">
+                                <div class="score-header">
+                                    <span class="score-icon">💼</span>
+                                    <span class="score-name">Business Potential</span>
+                                </div>
+                                <div class="score-value">78%</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 78%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="score-card" onclick="showScoreDetail('innovation')">
+                                <div class="score-header">
+                                    <span class="score-icon">🚀</span>
+                                    <span class="score-name">Technical Innovation</span>
+                                </div>
+                                <div class="score-value">85%</div>
+                                <div class="score-bar">
+                                    <div class="score-fill" style="width: 85%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="judges-section">
+                        <h3 class="judges-title">👥 Expert Reviews</h3>
+                        <div class="judge-reviews">
+                            <div class="judge-review" onclick="showJudgeReview(1)">
+                                <img src="images/judge1.png" alt="Judge 1" class="judge-avatar">
+                                <div class="review-content">
+                                    <div class="judge-name">Dr. James Chen</div>
+                                    <div class="judge-role">Senior Investment Director</div>
+                                    <div class="review-score">85.82</div>
+                                    <p class="review-text">This project demonstrates exceptional code architecture and scalability...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="judge-review" onclick="showJudgeReview(2)">
+                                <img src="images/judge2.png" alt="Judge 2" class="judge-avatar">
+                                <div class="review-content">
+                                    <div class="judge-name">Dr. Emily Roberts</div>
+                                    <div class="judge-role">Tech Innovation Advisor</div>
+                                    <div class="review-score">85.28</div>
+                                    <p class="review-text">The technical innovation shown here is remarkable, particularly in...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="judge-review" onclick="showJudgeReview(3)">
+                                <img src="images/judge3.png" alt="Judge 3" class="judge-avatar">
+                                <div class="review-content">
+                                    <div class="judge-name">Dr. Marcus Johnson</div>
+                                    <div class="judge-role">Business Strategy Expert</div>
+                                    <div class="review-score">86.94</div>
+                                    <p class="review-text">From a business perspective, this project has strong market potential...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="judge-review" onclick="showJudgeReview(4)">
+                                <img src="images/judge4.png" alt="Judge 4" class="judge-avatar">
+                                <div class="review-content">
+                                    <div class="judge-name">Dr. Priya Sharma</div>
+                                    <div class="judge-role">AI Systems Architect</div>
+                                    <div class="review-score">86.53</div>
+                                    <p class="review-text">The AI implementation is sophisticated and well-designed, showing...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Score Details -->
+    <div id="scoreModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('scoreModal')">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalContent"></p>
+        </div>
+    </div>
+
+    <!-- Modal for Judge Reviews -->
+    <div id="judgeModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('judgeModal')">&times;</span>
+            <h3 id="judgeModalTitle"></h3>
+            <p id="judgeModalContent"></p>
+        </div>
+    </div>
+
+    <!-- Modal for File Upload -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('uploadModal')">&times;</span>
+            <h3>Upload Project Documentation</h3>
+            <p>Please select a file to upload (.doc, .docx, .txt, .pdf)</p>
+            <input type="file" id="modalFileInput" accept=".doc,.docx,.txt,.pdf">
+            <button class="btn-primary" onclick="handleFileUpload()">Upload</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
