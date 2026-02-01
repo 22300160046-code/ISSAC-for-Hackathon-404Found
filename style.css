@@ -1335,3 +1335,300 @@ body {
         font-size: 1.2rem;
     }
 }
+/* ==================== Markdown阅读器弹窗样式 ==================== */
+
+/* 弹窗容器 - 简洁风格 */
+.markdown-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+    animation: fadeIn 0.2s ease;
+}
+
+/* 内容容器 */
+.markdown-modal-content {
+    background: #1a1a1a;
+    width: 100%;
+    max-width: 1000px;
+    max-height: 90vh;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp 0.3s ease;
+}
+
+/* 关闭按钮 */
+.markdown-modal-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 10001;
+}
+
+.markdown-modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+/* Markdown内容区域 */
+.markdown-reader {
+    padding: 60px 80px;
+    overflow-y: auto;
+    color: #e0e0e0;
+    line-height: 1.8;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+
+/* 滚动条样式 */
+.markdown-reader::-webkit-scrollbar {
+    width: 8px;
+}
+
+.markdown-reader::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.markdown-reader::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.markdown-reader::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==================== Markdown元素样式 ==================== */
+
+/* 标题 */
+.markdown-reader h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.markdown-reader h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin: 50px 0 20px 0;
+    color: #a855f7;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.markdown-reader h3 {
+    font-size: 1.4em;
+    font-weight: 600;
+    margin: 35px 0 15px 0;
+    color: #c084fc;
+}
+
+.markdown-reader h4 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 25px 0 12px 0;
+    color: #d8b4fe;
+}
+
+/* 段落 */
+.markdown-reader p {
+    margin: 15px 0;
+    color: #d0d0d0;
+}
+
+/* 粗体 */
+.markdown-reader strong {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* 斜体 */
+.markdown-reader em {
+    color: #e0e0e0;
+    font-style: italic;
+}
+
+/* 链接 */
+.markdown-reader a {
+    color: #60a5fa;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(96, 165, 250, 0.3);
+    transition: all 0.2s;
+}
+
+.markdown-reader a:hover {
+    color: #93c5fd;
+    border-bottom-color: #93c5fd;
+}
+
+/* 列表 */
+.markdown-reader ul,
+.markdown-reader ol {
+    margin: 20px 0;
+    padding-left: 30px;
+}
+
+.markdown-reader li {
+    margin: 8px 0;
+    color: #d0d0d0;
+}
+
+.markdown-reader ul li::marker {
+    color: #a855f7;
+}
+
+.markdown-reader ol li::marker {
+    color: #a855f7;
+    font-weight: 600;
+}
+
+/* 引用块 */
+.markdown-reader blockquote {
+    margin: 25px 0;
+    padding: 20px 25px;
+    background: rgba(168, 85, 247, 0.08);
+    border-left: 4px solid #a855f7;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-style: italic;
+}
+
+/* 代码块 */
+.markdown-reader code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+    font-size: 0.9em;
+    color: #f472b6;
+}
+
+.markdown-reader pre {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 25px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markdown-reader pre code {
+    background: none;
+    padding: 0;
+    color: #e0e0e0;
+}
+
+/* 表格 */
+.markdown-reader table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.markdown-reader thead {
+    background: rgba(168, 85, 247, 0.15);
+}
+
+.markdown-reader th {
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+}
+
+.markdown-reader td {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: #d0d0d0;
+}
+
+.markdown-reader tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* 水平分割线 */
+.markdown-reader hr {
+    margin: 40px 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), transparent);
+}
+
+/* 上标 */
+.markdown-reader sup {
+    color: #60a5fa;
+    font-size: 0.75em;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .markdown-reader {
+        padding: 40px 30px;
+        font-size: 15px;
+    }
+    
+    .markdown-reader h1 {
+        font-size: 2em;
+    }
+    
+    .markdown-reader h2 {
+        font-size: 1.5em;
+    }
+    
+    .markdown-modal-close {
+        top: 15px;
+        right: 15px;
+        width: 36px;
+        height: 36px;
+    }
+}
