@@ -109,6 +109,12 @@ function showScoreDetail(type) {
     const title = document.getElementById('modalTitle');
     const content = document.getElementById('modalContent');
     
+    // 如果是代码质量，显示完整报告
+    if (type === 'code') {
+        showCodeQualityReport();
+        return;
+    }
+    
     const details = {
         code: {
             title: '💻 Code Quality',
@@ -265,3 +271,310 @@ window.onclick = function(event) {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('SAGE website loaded successfully!');
 });
+// Code Quality Report Function
+function showCodeQualityReport() {
+    const modal = document.getElementById('scoreModal');
+    modal.classList.add('code-quality-modal');
+    
+    const title = document.getElementById('modalTitle');
+    const content = document.getElementById('modalContent');
+    
+    title.innerHTML = '';
+    
+    const html = `
+        <div class="report-header">
+            <div class="report-project-name">agent-browser</div>
+            <div class="report-meta">
+                <div class="report-meta-item">
+                    <span class="icon">📅</span>
+                    <span>2026年02月01日</span>
+                </div>
+                <div class="report-meta-item">
+                    <span class="icon">🤖</span>
+                    <span>Qwen/Qwen3-8B</span>
+                </div>
+            </div>
+            <div class="report-score-container">
+                <div class="report-score-circle">
+                    <svg width="120" height="120">
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,68,68,0.2)" stroke-width="8"/>
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="url(#scoreGradient)" stroke-width="8" 
+                                stroke-dasharray="339.292" stroke-dashoffset="271.434" 
+                                transform="rotate(-90 60 60)" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ff4444"/>
+                                <stop offset="100%" style="stop-color:#ff6666"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="report-score-value">2/10</div>
+                </div>
+                <div class="report-gate-status">
+                    <div class="gate-badge fail">FAIL</div>
+                    <div class="report-score-label">质量门禁</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="report-critical-issues">
+            <div class="critical-issues-title">
+                <span>🔴</span>
+                <span>Top 3 致命问题</span>
+            </div>
+            <div class="critical-issue-item">
+                <div class="critical-issue-priority">1</div>
+                <div class="critical-issue-content">
+                    <div class="critical-issue-title">无测试代码</div>
+                    <div class="critical-issue-desc">核心模块无任何测试保护，存在严重质量风险</div>
+                </div>
+            </div>
+            <div class="critical-issue-item">
+                <div class="critical-issue-priority">2</div>
+                <div class="critical-issue-content">
+                    <div class="critical-issue-title">命令注入漏洞</div>
+                    <div class="critical-issue-desc">executeCommand() 使用字符串拼接构造命令</div>
+                </div>
+            </div>
+            <div class="critical-issue-item">
+                <div class="critical-issue-priority">3</div>
+                <div class="critical-issue-content">
+                    <div class="critical-issue-title">循环依赖与耦合度过高</div>
+                    <div class="critical-issue-desc">browser.js 与 session.js 直接相互引用</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="report-sections">
+            <div class="report-section" onclick="toggleReportSection(this)">
+                <div class="report-section-header">
+                    <div class="report-section-icon">🔍</div>
+                    <div class="report-section-title">静态代码分析</div>
+                    <div class="report-section-toggle">▼</div>
+                </div>
+                <div class="report-section-content">
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">代码规范与风格</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>存在大量无意义的变量名和函数名（如 data、temp、handleSomething）</li>
+                            <li>缩进不一致，部分使用2空格，部分使用4空格</li>
+                            <li>存在废弃的 for...in 循环和未使用的 var 声明</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">逻辑复杂度</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>session.js 中存在多层嵌套的 if/else 结构，缩进超过4层</li>
+                            <li>processRequest() 函数有300+行，违反单一职责原则</li>
+                            <li>logMessage() 函数包含多个条件分支，认知复杂度高</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">DRY原则</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>formatError()、formatResponse()、formatLog() 三者结构高度相似</li>
+                            <li>多处出现硬编码的常量值，缺乏抽象</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-section" onclick="toggleReportSection(this)">
+                <div class="report-section-header">
+                    <div class="report-section-icon">🧪</div>
+                    <div class="report-section-title">自动化测试</div>
+                    <div class="report-section-toggle">▼</div>
+                </div>
+                <div class="report-section-content">
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">测试覆盖范围</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>项目根目录没有 /test 或 /__tests__ 文件夹</li>
+                            <li>关键业务逻辑无任何测试覆盖</li>
+                            <li>所有核心模块均无测试保护，存在严重质量风险</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-section" onclick="toggleReportSection(this)">
+                <div class="report-section-header">
+                    <div class="report-section-icon">👁️</div>
+                    <div class="report-section-title">代码评审</div>
+                    <div class="report-section-toggle">▼</div>
+                </div>
+                <div class="report-section-content">
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">设计模式与抽象</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>项目中未使用任何设计模式，代码结构松散</li>
+                            <li>高层抽象直接依赖底层实现细节</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">可读性与文档</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>代码缺乏注释，多数函数无描述</li>
+                            <li>注释多为代码翻译，缺乏意图说明</li>
+                            <li>README.md 缺少架构图、API 文档、贡献指南</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">安全性</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>executeCommand() 使用字符串拼接构造命令，存在命令注入风险</li>
+                            <li>核心接口对用户输入无校验</li>
+                            <li>缺乏安全策略和 HTTPS 强制使用</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-section" onclick="toggleReportSection(this)">
+                <div class="report-section-header">
+                    <div class="report-section-icon">🏗️</div>
+                    <div class="report-section-title">架构与设计</div>
+                    <div class="report-section-toggle">▼</div>
+                </div>
+                <div class="report-section-content">
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">耦合度与内聚性</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>browser.js 与 session.js 直接相互引用，形成循环依赖</li>
+                            <li>修改 SessionManager 可能影响多个模块</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">架构分层</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>业务逻辑泄露到控制器层</li>
+                            <li>使用过时的 request-promise-native 库</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-section" onclick="toggleReportSection(this)">
+                <div class="report-section-header">
+                    <div class="report-section-icon">🚦</div>
+                    <div class="report-section-title">质量门禁评估</div>
+                    <div class="report-section-toggle">▼</div>
+                </div>
+                <div class="report-section-content">
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">可靠性</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>executeCommand() 存在命令注入漏洞</li>
+                            <li>processRequest() 缺乏异常处理机制</li>
+                            <li>SessionManager 无重试机制，易崩溃</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">安全性</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>executeCommand() 存在命令注入风险</li>
+                            <li>parseUrl() 无输入校验</li>
+                            <li>缺少 HTTPS 强制使用策略</li>
+                        </ul>
+                    </div>
+                    <div class="report-subsection">
+                        <div class="report-subsection-header">
+                            <div class="report-subsection-title">可维护性</div>
+                            <div class="report-rating F">F</div>
+                        </div>
+                        <ul class="report-issues-list">
+                            <li>技术债务高，需重构所有核心模块</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="report-highlights">
+            <div class="highlights-title">
+                <span>🟢</span>
+                <span>Top 3 亮点</span>
+            </div>
+            <ul class="highlights-list">
+                <li>结构清晰：部分模块如 utils 目录组织良好</li>
+                <li>可扩展性设计：部分类设计具备扩展能力</li>
+                <li>现代前端集成：支持浏览器自动化操作</li>
+            </ul>
+        </div>
+        
+        <div class="report-roadmap">
+            <div class="roadmap-title">
+                <span>🚀</span>
+                <span>改进路线图</span>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-step">1</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-item-title">引入测试框架</div>
+                    <div class="roadmap-item-desc">添加 Jest 或 Mocha，编写单元测试和集成测试</div>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-step">2</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-item-title">重构核心模块</div>
+                    <div class="roadmap-item-desc">拆分 processRequest() 和 SessionManager，消除循环依赖</div>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-step">3</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-item-title">增强安全性</div>
+                    <div class="roadmap-item-desc">输入校验、防止命令注入、强制 HTTPS</div>
+                </div>
+            </div>
+            <div class="roadmap-item">
+                <div class="roadmap-step">4</div>
+                <div class="roadmap-content">
+                    <div class="roadmap-item-title">完善文档</div>
+                    <div class="roadmap-item-desc">增加架构图、API 文档、贡献指南和开发规范</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    content.innerHTML = html;
+    modal.style.display = 'flex';
+}
+
+function toggleReportSection(element) {
+    element.classList.toggle('expanded');
+}
