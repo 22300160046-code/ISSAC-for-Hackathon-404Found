@@ -121,139 +121,69 @@ function showScoreDetail(type) {
         return;
     }
     
-    const details = {
-        code: {
-            title: '💻 Code Quality',
-            score: 87,
-            metrics: [
-                { name: '代码架构', score: 90, desc: '模块化设计清晰,采用分层架构,核心预测引擎与数据处理层分离良好' },
-                { name: '代码规范', score: 85, desc: '遵循PEP 8规范,命名规范统一,注释覆盖率70%' },
-                { name: '测试覆盖', score: 82, desc: '单元测试覆盖率78%,集成测试完整,但边界情况测试可加强' },
-                { name: '文档质量', score: 88, desc: 'README详尽,API文档完整,提供多个使用示例和教程' },
-                { name: '依赖管理', score: 90, desc: 'requirements.txt清晰,版本锁定合理,无已知安全漏洞' },
-                { name: '性能优化', score: 86, desc: '支持批量处理和并行计算,内存使用优化良好' }
-            ]
-        },
-        business: {
-            title: '💼 Business Potential',
-            score: 78,
-            metrics: [
-                { name: '市场需求', score: 85, desc: '时序预测是金融、零售、能源等多个行业的刚需' },
-                { name: '竞争优势', score: 75, desc: '自动化特征工程是亮点,但面临Prophet、ARIMA等成熟工具的竞争' },
-                { name: '商业模式', score: 72, desc: '开源+云服务的混合模式可行,但需要明确的变现路径' },
-                { name: '用户获取', score: 78, desc: 'GitHub星标增长稳定,社区活跃度中等' },
-                { name: '可扩展性', score: 82, desc: '架构支持水平扩展,可集成到企业级数据平台' },
-                { name: '团队能力', score: 76, desc: '核心团队技术能力强,但商业运营经验有待提升' }
-            ]
-        },
-        innovation: {
-            title: '🚀 Technical Innovation',
-            score: 85,
-            metrics: [
-                { name: '技术创新', score: 88, desc: '自动化模型选择和超参数调优算法具有创新性' },
-                { name: '算法优化', score: 82, desc: '在经典算法基础上进行了优化,但未提出全新的预测模型' },
-                { name: '工程创新', score: 87, desc: '流水线设计优雅,支持插件式扩展,降低了使用门槛' },
-                { name: '应用场景', score: 84, desc: '覆盖多个行业场景,提供了实际案例' },
-                { name: '前沿技术', score: 83, desc: '集成了LSTM、Transformer等深度学习模型' },
-                { name: '用户体验', score: 86, desc: 'API设计简洁直观,学习曲线平缓,可视化工具实用' }
-            ]
-        },
-        social: {
-            title: '🌍 Social Impact',
-            score: 82,
-            metrics: [
-                { name: '技术普惠', score: 88, desc: '大幅降低时序预测的技术门槛,让非专家也能使用' },
-                { name: '开源贡献', score: 85, desc: '代码完全开源,采用MIT许可证,鼓励社区贡献' },
-                { name: '教育价值', score: 80, desc: '提供了学习资源和教程,但系统性教育内容有待完善' },
-                { name: '社会应用', score: 84, desc: '可应用于公共卫生、环境监测、灾害预警等公益领域' },
-                { name: '伦理考量', score: 75, desc: '提供了基本的数据隐私保护,但对算法偏见的关注不足' },
-                { name: '可持续性', score: 80, desc: '项目维护活跃,社区健康,但需要更多资源支持' }
-            ]
-        }
-    };
+    // 维度详细内容已删除，由后端提供
+    const details = {};
     
-    const detail = details[type];
-    title.innerHTML = `${detail.title} <span style="color: #a855f7; font-weight: 800;">${detail.score}%</span>`;
-    
-    // 生成详细评分HTML
-    let html = '<div class="score-detail-container">';
-    
-    detail.metrics.forEach((metric, index) => {
-        const percentage = metric.score;
-        const delay = index * 0.1;
-        
-        html += `
-            <div class="metric-item" style="animation-delay: ${delay}s">
-                <div class="metric-header">
-                    <span class="metric-name">${metric.name}</span>
-                    <span class="metric-score">${metric.score}</span>
-                </div>
-                <div class="metric-bar-container">
-                    <div class="metric-bar-bg">
-                        <div class="metric-bar-fill" style="width: ${percentage}%"></div>
-                    </div>
-                </div>
-                <div class="metric-desc">${metric.desc}</div>
-            </div>
-        `;
-    });
-    
-    html += '</div>';
-    content.innerHTML = html;
+    // 显示待开发提示（详细内容由后端提供）
+    title.textContent = '';
+    content.innerHTML = `
+        <div style="text-align: center; padding: 80px 40px;">
+            <div style="font-size: 5rem; margin-bottom: 30px;">🚧</div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #a855f7;">待开发</h2>
+        </div>
+    `;
     modal.style.display = 'flex';
 }
 
 // Judge Review Modal
 function showJudgeReview(judgeId) {
+    // 检查是否已评估
+    const judgeReview = document.querySelector(`[data-judge-id="${judgeId}"]`);
+    if (judgeReview) {
+        const scoreElement = judgeReview.querySelector('.review-score');
+        if (scoreElement && scoreElement.textContent === '待评估') {
+            // 显示待开发提示
+            showUnderDevelopmentModal();
+            return;
+        }
+    }
+    
+    // 如果已评估，也显示待开发提示（因为详细内容已删除）
+    showUnderDevelopmentModal();
+}
+
+// 详情页评委卡片点击
+function showJudgeCardModal(judgeId) {
+    showUnderDevelopmentModal();
+}
+
+// 显示待开发提示弹窗
+function showUnderDevelopmentModal() {
     const modal = document.getElementById('judgeModal');
     const title = document.getElementById('judgeModalTitle');
     const content = document.getElementById('judgeModalContent');
     
-    const reviews = {
-        1: {
-            title: 'Jensen Huang - CEO of NVIDIA',
-            content: `ChronoML 这个项目让我看到了新一轮"AI工业革命"的缩影。时序数据是物理世界和数字世界的交汇点,从工厂的传感器数据流,到自动驾驶汽车的轨迹预测,再到整个电网的负载平衡,本质上都是大规模的时序问题。ChronoML 不仅仅是一个算法库,它更像是一个面向未来的"时序数据操作系统"的雏形。
+    if (modal && title && content) {
+        title.textContent = '';
+        content.innerHTML = `
+            <div style="text-align: center; padding: 80px 40px;">
+                <div style="font-size: 5rem; margin-bottom: 30px;">🚧</div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #a855f7;">待开发</h2>
+            </div>
+        `;
+        modal.style.display = 'flex';
+    }
+}
 
-我尤其欣赏这个项目在架构设计上的前瞻性。它没有满足于单机运行,而是从一开始就考虑了分布式计算和并行处理。这意味着当数据规模从GB扩展到TB甚至PB级别时,ChronoML 的核心架构依然能够从容应对。这种'全栈加速'(Full-Stack Acceleration)的思维至关重要。我可以看到,未来 ChronoML 可以无缝地集成到CUDA和TensorRT这样的加速计算平台中,在数据中心级别为海量的时序任务提供前所未有的处理能力。想象一下,当成千上万个物联网设备产生的数据洪流,能够被一个统一的、高效的平台实时分析和预测,这将催生出我们今天难以想象的'数字孪生'(Digital Twin)应用。
-
-对于下一步的发展,我建议团队将目光投向更宏大的场景。不要只把自己看作一个模型工具,而要将 ChronoML 定位为一个'平台'。构建一个强大的生态系统,开放API,让第三方开发者可以轻松地将他们的专用模型、数据源甚至硬件解决方案集成进来。一个成功的平台,胜利不取决于自己做了什么,而取决于赋能了多少人去做他们想做的事。
-
-ChronoML 团队拥有正确的基因:他们不仅懂算法,更懂系统和规模化。这个项目正在构建的,是未来AI基础设施中不可或缺的一块基石。继续加速,未来可期。`
-        },
-        2: {
-            title: 'Fei-Fei Li - Stanford AI Lab Director',
-            content: `看到 ChronoML 这个项目,我感到非常欣慰。它体现了AI技术发展的核心方向之一:从'感知智能'走向'认知与决策智能'。时序数据不仅仅是冰冷的数字,它背后记录的是真实世界中每一个个体、每一个系统的行为与脉搏。ChronoML 正在努力解读这些脉搏,并赋予我们预测未来的能力,这其中蕴含着巨大的、以人为本的潜力。
-
-这个项目最打动我的一点,是它致力于降低AI应用的门槛。正如我们在ImageNet项目上所做的那样,一个标准化的、高质量的工具集,对于推动整个领域的科学研究和应用落地至关重要。ChronoML 通过自动化的模型选择和特征工程,让AI不再是少数顶尖专家的专利。我能想象,一位年轻的流行病学家,可以利用 ChronoML 快速构建传染病传播模型;一位城市规划者,可以用它来预测交通流量,优化公共资源。这种赋能,正是技术服务于人类福祉的最佳体现。
-
-在肯定其价值的同时,我也想从一个'以人为本的AI'(Human-Centered AI)的视角,提出几点思考和建议:关注数据中的偏见与公平性。时序数据同样存在偏见。例如,来自不同地区、不同人群的医疗数据可能存在巨大的差异。我希望 ChronoML 在未来的版本中,能够加入对数据偏见的检测和修正工具,确保模型做出的预测对于每一个群体都是公平和可靠的。这不仅仅是技术问题,更是深刻的伦理问题。
-
-ChronoML 团队的工作,让我看到了AI技术在解决现实世界复杂问题上的巨大潜力。我希望你们在追求技术卓越的同时,永远不要忘记技术背后的人。继续保持这份初心,你们的工作将为社会带来不可估量的积极影响。`
-        },
-        3: {
-            title: 'Andrew Ng - AI Pioneer & Educator',
-            content: `首先,ChronoML 团队在解决一个非常重要且普遍存在的问题——时序数据预测的自动化。从金融市场的波动到供应链的需求管理,再到流行病的传播预测,时序分析是连接数据与现实世界决策的关键桥梁。这个项目选择了一个极具价值的赛道,这本身就值得赞赏。
-
-我看到项目中一个非常出色的地方,在于它对 '模型集成' (Model Ensembling) 和 '特征工程自动化' (Automated Feature Engineering) 的处理方式。很多时候,一个项目的成功并不取决于发明一个全新的、最复杂的算法,而在于如何巧妙地将现有成熟的技术系统化、流程化,从而大幅降低应用门槛。ChronoML 正是这样做的。它不仅集成了从ARIMA到LSTM等多种经典模型,更重要的是,它构建了一套智能化的特征提取流水线。这让那些不具备深厚领域知识的开发者,也能够快速上手并获得一个相当不错的基准模型(Baseline Model)。这正是技术民主化的体现,也是AI工程化的核心价值所在——让强大的AI能力赋能于每一位开发者。
-
-当然,一个有潜力的项目,我们不仅要看它的优点,更要思考它如何能走得更远。我有两个建议或许可以帮助 ChronoML 成长:增强可解释性,项目目前在预测精度上做得很好,但如果能引入像SHAP或LIME这样的工具,让用户不仅知道'预测结果是什么',更能理解'为什么会做出这样的预测',那么它的价值将实现质的飞跃。尤其是在医疗、金融等高风险领域,可解释性是建立信任的基石。
-
-总而言之,ChronoML 是一个目标明确、基础扎实且潜力巨大的开源项目。它让我看到了AI技术从理论走向实践的又一个精彩范例。我非常期待看到它未来的发展,也向这个项目的每一位贡献者致以我最诚挚的敬意。`
-        },
-        4: {
-            title: 'Sam Altman - CEO of OpenAI',
-            content: `ChronoML 是一个非常聪明的项目。它没有去尝试重新发明轮子,而是专注于做一个极其重要的'连接器'和'加速器'。在AI领域,我们经常看到两种成功的路径:一种是像GPT系列那样,通过极致的规模化(Scaling)来推动能力的涌现;另一种,就是像 ChronoML 这样,通过极致的工程化和产品化,将强大的AI能力封装成简单易用的工具,从而引爆开发者生态。
-
-这个项目让我联想到了早期Stripe在支付领域所做的事情。在Stripe出现之前,在线支付是一个极其复杂、需要大量专业知识的领域。Stripe用几行简单的API,就将这种复杂性彻底隐藏了起来。ChronoML 正在对时序预测做同样的事情。它所提供的自动化流水线,本质上是在大幅降低'进行一次高质量时序预测'的边际成本。当这个成本足够低时,就会有成千上万的开发者和初创公司,在他们自己的产品中集成这种预测能力,从而创造出我们今天无法想象的应用场景。这正是平台级产品的典型特征。
-
-对于 ChronoML 的未来,我的建议非常直接,聚焦于如何快速成长为一个真正的'平台':痴迷于开发者体验。你们的文档很好,但还不够。要提供可以直接在浏览器中运行的Jupyter Notebook教程,要有一键部署到各种云平台的脚本,要让一个新手开发者在5分钟内就能得到第一个有意义的预测结果。开发者的时间是你们最宝贵的资源,必须不惜一切代价去节省它。
-
-我们正处在一个由AI驱动的新的平台转型期。像 ChronoML 这样,能够将一种核心AI能力产品化、规模化的项目,有巨大的潜力成为下一个十年里开发者工具箱中的基础组件。不要犹豫,快速迭代,尽快占领市场。我很看好你们。`
-        }
-    };
+// 旧的showJudgeReview函数（已删除详细内容）
+function showJudgeReviewOld(judgeId) {
+    const modal = document.getElementById('judgeModal');
+    const title = document.getElementById('judgeModalTitle');
+    const content = document.getElementById('judgeModalContent');
     
-    title.textContent = reviews[judgeId].title;
-    content.textContent = reviews[judgeId].content;
+    // 评委详细内容已删除，由后端提供
+    title.textContent = '待开发';
+    content.textContent = '待开发';
     modal.style.display = 'flex';
 }
 
@@ -1179,27 +1109,139 @@ window.scrollToSection = function(sectionId) {
 
 /**
  * 模拟后端完成 - 供测试使用
- */
+ *// 测试按钮：显示手动输入界面
 function simulateBackendComplete() {
-    console.log('🧪 模拟后端完成被触发');
+    console.log('🧪 测试按钮被点击，显示手动输入界面');
+    showManualInputModal();
+}
+
+// 显示手动输入界面
+function showManualInputModal() {
+    const modal = document.getElementById('scoreModal');
+    const title = document.getElementById('modalTitle');
+    const content = document.getElementById('modalContent');
     
-    // 模拟后端返回的评估结果
+    if (!modal || !title || !content) return;
+    
+    title.innerHTML = '🧪 手动输入测试数据';
+    
+    content.innerHTML = `
+        <div style="padding: 20px;">
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #a855f7; margin-bottom: 20px; font-size: 1.3rem;">📊 四个维度评分</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">💻 Code Quality (0-100)</label>
+                        <input type="number" id="input_code_score" min="0" max="100" placeholder="87" 
+                               style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">💼 Business Potential (0-100)</label>
+                        <input type="number" id="input_business_score" min="0" max="100" placeholder="78" 
+                               style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">🚀 Technical Innovation (0-100)</label>
+                        <input type="number" id="input_innovation_score" min="0" max="100" placeholder="85" 
+                               style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">🌍 Social Impact (0-100)</label>
+                        <input type="number" id="input_social_score" min="0" max="100" placeholder="82" 
+                               style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 1rem;">
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <h3 style="color: #a855f7; margin-bottom: 20px; font-size: 1.3rem;">📝 四个维度详细报告</h3>
+                <div style="display: grid; gap: 15px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">💻 Code Quality 报告</label>
+                        <textarea id="input_code_report" rows="3" placeholder="输入代码质量详细报告..." 
+                                  style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 0.95rem; resize: vertical;"></textarea>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">💼 Business Potential 报告</label>
+                        <textarea id="input_business_report" rows="3" placeholder="输入商业潜力详细报告..." 
+                                  style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 0.95rem; resize: vertical;"></textarea>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">🚀 Technical Innovation 报告</label>
+                        <textarea id="input_innovation_report" rows="3" placeholder="输入技术创新详细报告..." 
+                                  style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 0.95rem; resize: vertical;"></textarea>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; color: #ccc;">🌍 Social Impact 报告</label>
+                        <textarea id="input_social_report" rows="3" placeholder="输入社会影响详细报告..." 
+                                  style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.3); border-radius: 8px; color: white; font-size: 0.95rem; resize: vertical;"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                <button onclick="closeModal('scoreModal')" 
+                        style="padding: 12px 30px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; cursor: pointer; font-size: 1rem;">
+                    取消
+                </button>
+                <button onclick="submitManualInput()" 
+                        style="padding: 12px 30px; background: linear-gradient(135deg, #a855f7, #ec4899); border: none; border-radius: 8px; color: white; cursor: pointer; font-size: 1rem; font-weight: 600;">
+                    完成
+                </button>
+            </div>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+}
+
+// 提交手动输入的数据
+function submitManualInput() {
+    // 获取评分
+    const codeScore = parseInt(document.getElementById('input_code_score').value) || 0;
+    const businessScore = parseInt(document.getElementById('input_business_score').value) || 0;
+    const innovationScore = parseInt(document.getElementById('input_innovation_score').value) || 0;
+    const socialScore = parseInt(document.getElementById('input_social_score').value) || 0;
+    
+    // 获取报告
+    const codeReport = document.getElementById('input_code_report').value || '';
+    const businessReport = document.getElementById('input_business_report').value || '';
+    const innovationReport = document.getElementById('input_innovation_report').value || '';
+    const socialReport = document.getElementById('input_social_report').value || '';
+    
+    // 验证输入
+    if (codeScore < 0 || codeScore > 100 || businessScore < 0 || businessScore > 100 || 
+        innovationScore < 0 || innovationScore > 100 || socialScore < 0 || socialScore > 100) {
+        alert('评分必须在0-100之间！');
+        return;
+    }
+    
+    // 构造结果对象
     const mockResult = {
-        projectName: 'ChronoML',
-        overallScore: 85,
+        success: true,
         scores: {
-            codeQuality: 87,
-            businessPotential: 78,
-            technicalInnovation: 88,
-            socialImpact: 82
+            codeQuality: codeScore,
+            businessPotential: businessScore,
+            technicalInnovation: innovationScore,
+            socialImpact: socialScore
+        },
+        reports: {
+            code: codeReport,
+            business: businessReport,
+            innovation: innovationReport,
+            social: socialReport
         },
         timestamp: new Date().toISOString()
     };
     
-    // 显示提示
-    updateStatusMessage('🧪 测试模式：模拟收到后端结果', 'completed');
+    // 关闭模态框
+    closeModal('scoreModal');
     
     // 调用后端完成回调
+    setTimeout(() => {
+        onBackendComplete(mockResult);
+    }, 500);
+}    // 调用后端完成回调
     setTimeout(() => {
         onBackendComplete(mockResult);
     }, 500);
@@ -1235,25 +1277,25 @@ document.addEventListener('DOMContentLoaded', function() {
 /**
  * 显示评估结果 - 在评估完成后调用
  * @param {Object} results - 评估结果对象
+ * @param {Object} reports - 详细报告对象（可选）
  */
-function showEvaluationResults(results) {
+function showEvaluationResults(results, reports) {
     console.log('显示评估结果:', results);
-    
-    // 默认结果（如果没有提供）
-    const defaultResults = {
-        codeQuality: 87,
-        businessPotential: 78,
-        technicalInnovation: 85,
-        socialImpact: 82
-    };
-    
-    const scores = results || defaultResults;
+    console.log('详细报告:', reports);
     
     // 更新每个评分卡片
-    updateScoreCard('code', scores.codeQuality);
-    updateScoreCard('business', scores.businessPotential);
-    updateScoreCard('innovation', scores.technicalInnovation);
-    updateScoreCard('social', scores.socialImpact);
+    updateScoreCard('code', results.codeQuality);
+    updateScoreCard('business', results.businessPotential);
+    updateScoreCard('innovation', results.technicalInnovation);
+    updateScoreCard('social', results.socialImpact);
+    
+    // 更新评委按钮
+    updateJudgeReviews();
+    
+    // 保存报告数据到全局变量（供后续使用）
+    if (reports) {
+        window.evaluationReports = reports;
+    }
 }
 
 /**
@@ -1324,10 +1366,36 @@ window.onBackendComplete = function(result) {
     if (result && result.scores) {
         // 延迟显示结果，确保跳转动画完成后再显示
         setTimeout(() => {
-            showEvaluationResults(result.scores);
+            showEvaluationResults(result.scores, result.reports);
         }, 1000);
     }
 };
+
+/**
+ * 更新评委按钮显示
+ */
+function updateJudgeReviews() {
+    const judgeReviews = document.querySelectorAll('.judge-review');
+    
+    judgeReviews.forEach((review) => {
+        const scoreElement = review.querySelector('.review-score');
+        const textElement = review.querySelector('.review-text');
+        
+        if (scoreElement) {
+            const originalScore = scoreElement.getAttribute('data-judge-score');
+            if (originalScore) {
+                scoreElement.textContent = originalScore;
+            }
+        }
+        
+        if (textElement) {
+            const originalText = textElement.getAttribute('data-judge-text');
+            if (originalText) {
+                textElement.textContent = originalText;
+            }
+        }
+    });
+}
 
 // 修改showScoreDetail函数，在未评估时显示提示
 const originalShowScoreDetail = window.showScoreDetail;
