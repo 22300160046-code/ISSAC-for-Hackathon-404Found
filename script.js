@@ -109,27 +109,35 @@ function showScoreDetail(type) {
     const title = document.getElementById('modalTitle');
     const content = document.getElementById('modalContent');
     
-    // 如果是代码质量，显示完整报告
-    if (type === 'code') {
-        showCodeQualityReport();
+    // 检查是否有用户输入的报告数据
+    if (window.evaluationReports && window.evaluationReports[type]) {
+        // 显示用户输入的报告内容
+        const reportContent = window.evaluationReports[type];
+        
+        const titleMap = {
+            code: '💻 Code Quality',
+            business: '💼 Business Potential',
+            innovation: '🚀 Technical Innovation',
+            social: '🌍 Social Impact'
+        };
+        
+        title.innerHTML = titleMap[type] || '详细报告';
+        content.innerHTML = `
+            <div style="padding: 30px; line-height: 1.8; color: #ccc; white-space: pre-wrap;">
+                ${reportContent || '暂无报告内容'}
+            </div>
+        `;
+        modal.style.display = 'flex';
         return;
     }
     
-    // 如果是商业潜力，显示Markdown报告
-    if (type === 'business') {
-        showBusinessPotentialReport();
-        return;
-    }
-    
-    // 维度详细内容已删除，由后端提供
-    const details = {};
-    
-    // 显示待开发提示（详细内容由后端提供）
+    // 如果没有用户输入的数据，显示待开发提示
     title.textContent = '';
     content.innerHTML = `
         <div style="text-align: center; padding: 80px 40px;">
             <div style="font-size: 5rem; margin-bottom: 30px;">🚧</div>
             <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: #a855f7;">待开发</h2>
+            <p style="color: #999; font-size: 1.1rem;">请先使用测试按钮输入评估数据</p>
         </div>
     `;
     modal.style.display = 'flex';
