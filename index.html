@@ -177,7 +177,13 @@
             
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
+                <div class="progress-text" id="progressText">0%</div>
             </div>
+            
+            <div class="progress-status" id="progressStatus">正在初始化评估引擎...</div>
+            
+            <!-- 测试按钮 -->
+            <button class="btn-test" id="testButton" onclick="simulateBackendComplete()">🧪 模拟后端完成</button>
             
             <button class="btn-cancel" onclick="scrollToSection('hero')">放弃生成，回到首页</button>
         </div>

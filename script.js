@@ -931,3 +931,288 @@ function getEvaluationData() {
         hasFile: !!uploadedFile
     };
 }
+
+// ============================================
+// 智能进度条系统
+// ============================================
+
+// 进度条状态
+let progressState = 'LOADING'; // LOADING, RECEIVED, WAITING, COMPLETED
+let progressValue = 0;
+let progressStartTime = null;
+let progressAnimationFrame = null;
+let evaluationResult = null;
+
+// 进度条配置
+const PROGRESS_CONFIG = {
+    TOTAL_TIME: 120000, // 120秒 (毫秒)
+    PHASE1_TIME: 30000,  // 0-30秒
+    PHASE2_TIME: 60000,  // 30-90秒
+    PHASE3_TIME: 30000,  // 90-120秒
+    PHASE1_END: 50,      // 第一阶段结束进度
+    PHASE2_END: 80,      // 第二阶段结束进度
+    PHASE3_END: 95,      // 第三阶段结束进度 (停在95%)
+    MAX_PROGRESS: 100    // 最大进度
+};
+
+// 状态文字配置
+const STATUS_MESSAGES = {
+    0: '正在初始化评估引擎...',
+    10: '正在分析代码仓库...',
+    20: '正在调用AI模型...',
+    30: '正在评估代码质量...',
+    40: '正在分析商业潜力...',
+    50: '正在评估技术创新...',
+    60: '正在分析社会效益...',
+    70: '正在生成评估报告...',
+    80: '正在汇总评估结果...',
+    90: '即将完成评估...',
+    95: '等待后端响应...',
+    100: '评估完成！正在跳转...'
+};
+
+/**
+ * 启动智能进度条
+ */
+function startSmartProgress() {
+    progressState = 'LOADING';
+    progressValue = 0;
+    progressStartTime = Date.now();
+    evaluationResult = null;
+    
+    updateProgressUI();
+    animateProgress();
+}
+
+/**
+ * 计算当前应该在的进度值
+ */
+function calculateTargetProgress() {
+    const elapsed = Date.now() - progressStartTime;
+    
+    if (progressState === 'RECEIVED' || progressState === 'COMPLETED') {
+        return PROGRESS_CONFIG.MAX_PROGRESS;
+    }
+    
+    // 阶段1: 0-30秒, 0%-50%
+    if (elapsed < PROGRESS_CONFIG.PHASE1_TIME) {
+        const progress = (elapsed / PROGRESS_CONFIG.PHASE1_TIME) * PROGRESS_CONFIG.PHASE1_END;
+        return Math.min(progress, PROGRESS_CONFIG.PHASE1_END);
+    }
+    
+    // 阶段2: 30-90秒, 50%-80%
+    if (elapsed < PROGRESS_CONFIG.PHASE1_TIME + PROGRESS_CONFIG.PHASE2_TIME) {
+        const phase2Elapsed = elapsed - PROGRESS_CONFIG.PHASE1_TIME;
+        const phase2Progress = (phase2Elapsed / PROGRESS_CONFIG.PHASE2_TIME) * 
+                               (PROGRESS_CONFIG.PHASE2_END - PROGRESS_CONFIG.PHASE1_END);
+        return Math.min(PROGRESS_CONFIG.PHASE1_END + phase2Progress, PROGRESS_CONFIG.PHASE2_END);
+    }
+    
+    // 阶段3: 90-120秒, 80%-95%
+    if (elapsed < PROGRESS_CONFIG.TOTAL_TIME) {
+        const phase3Elapsed = elapsed - PROGRESS_CONFIG.PHASE1_TIME - PROGRESS_CONFIG.PHASE2_TIME;
+        const phase3Progress = (phase3Elapsed / PROGRESS_CONFIG.PHASE3_TIME) * 
+                               (PROGRESS_CONFIG.PHASE3_END - PROGRESS_CONFIG.PHASE2_END);
+        return Math.min(PROGRESS_CONFIG.PHASE2_END + phase3Progress, PROGRESS_CONFIG.PHASE3_END);
+    }
+    
+    // 超过120秒,停在95%,进入等待状态
+    if (progressState === 'LOADING') {
+        progressState = 'WAITING';
+        updateStatusMessage('等待后端响应...', 'waiting');
+    }
+    
+    return PROGRESS_CONFIG.PHASE3_END;
+}
+
+/**
+ * 动画循环
+ */
+function animateProgress() {
+    if (progressState === 'COMPLETED') {
+        return;
+    }
+    
+    const targetProgress = calculateTargetProgress();
+    
+    // 平滑插值到目标进度
+    if (progressState === 'RECEIVED') {
+        // 收到输出后快速完成
+        progressValue += (targetProgress - progressValue) * 0.2;
+    } else {
+        // 正常加载时平滑过渡
+        progressValue += (targetProgress - progressValue) * 0.05;
+    }
+    
+    // 更新UI
+    updateProgressUI();
+    
+    // 检查是否完成
+    if (progressValue >= 99.9 && progressState === 'RECEIVED') {
+        progressValue = 100;
+        progressState = 'COMPLETED';
+        updateProgressUI();
+        updateStatusMessage('评估完成！正在跳转...', 'completed');
+        
+        // 0.5秒后跳转到结果页
+        setTimeout(() => {
+            scrollToSection('results');
+        }, 500);
+        
+        return;
+    }
+    
+    // 继续动画
+    progressAnimationFrame = requestAnimationFrame(animateProgress);
+}
+
+/**
+ * 更新进度条UI
+ */
+function updateProgressUI() {
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    
+    if (progressBar) {
+        progressBar.style.width = progressValue + '%';
+    }
+    
+    if (progressText) {
+        progressText.textContent = Math.floor(progressValue) + '%';
+    }
+    
+    // 更新状态文字
+    const currentProgress = Math.floor(progressValue);
+    const milestones = Object.keys(STATUS_MESSAGES).map(Number).sort((a, b) => a - b);
+    
+    for (let i = milestones.length - 1; i >= 0; i--) {
+        if (currentProgress >= milestones[i]) {
+            updateStatusMessage(STATUS_MESSAGES[milestones[i]]);
+            break;
+        }
+    }
+}
+
+/**
+ * 更新状态文字
+ */
+function updateStatusMessage(message, className = '') {
+    const statusElement = document.getElementById('progressStatus');
+    if (statusElement) {
+        statusElement.textContent = message;
+        statusElement.className = 'progress-status ' + className;
+    }
+}
+
+/**
+ * 后端完成回调 - 供后端调用
+ * @param {Object} result - 评估结果
+ */
+function onBackendComplete(result) {
+    console.log('收到后端评估结果:', result);
+    progressState = 'RECEIVED';
+    evaluationResult = result;
+    updateStatusMessage('收到评估结果，正在完成...', 'completed');
+}
+
+/**
+ * 停止进度条动画
+ */
+function stopProgress() {
+    if (progressAnimationFrame) {
+        cancelAnimationFrame(progressAnimationFrame);
+        progressAnimationFrame = null;
+    }
+}
+
+/**
+ * 重置进度条
+ */
+function resetProgress() {
+    stopProgress();
+    progressState = 'LOADING';
+    progressValue = 0;
+    progressStartTime = null;
+    evaluationResult = null;
+    updateProgressUI();
+}
+
+// ============================================
+// 页面滚动时自动启动进度条
+// ============================================
+
+// 监听滚动到loading页面
+const originalScrollToSection = window.scrollToSection;
+window.scrollToSection = function(sectionId) {
+    if (sectionId === 'loading') {
+        // 延迟100ms启动进度条,确保页面已滚动到位
+        setTimeout(() => {
+            startSmartProgress();
+        }, 100);
+    }
+    
+    if (originalScrollToSection) {
+        originalScrollToSection(sectionId);
+    } else {
+        // 如果原函数不存在,使用默认滚动
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+};
+
+// ============================================
+// 测试按钮和模拟功能
+// ============================================
+
+/**
+ * 模拟后端完成 - 供测试使用
+ */
+function simulateBackendComplete() {
+    console.log('🧪 模拟后端完成被触发');
+    
+    // 模拟后端返回的评估结果
+    const mockResult = {
+        projectName: 'ChronoML',
+        overallScore: 85,
+        scores: {
+            codeQuality: 87,
+            businessPotential: 78,
+            technicalInnovation: 88,
+            socialImpact: 82
+        },
+        timestamp: new Date().toISOString()
+    };
+    
+    // 显示提示
+    updateStatusMessage('🧪 测试模式：模拟收到后端结果', 'completed');
+    
+    // 调用后端完成回调
+    setTimeout(() => {
+        onBackendComplete(mockResult);
+    }, 500);
+}
+
+/**
+ * 显示/隐藏测试按钮
+ */
+function toggleTestButton(show) {
+    const testButton = document.getElementById('testButton');
+    if (testButton) {
+        testButton.style.display = show ? 'block' : 'none';
+    }
+}
+
+// 页面加载完成后初始化测试按钮
+document.addEventListener('DOMContentLoaded', function() {
+    // 测试按钮默认显示
+    toggleTestButton(true);
+    
+    // 可以通过URL参数控制是否显示测试按钮
+    // 例如: ?test=false 隐藏测试按钮
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('test') === 'false') {
+        toggleTestButton(false);
+    }
+});
