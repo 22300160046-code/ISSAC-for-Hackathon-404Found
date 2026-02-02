@@ -1632,3 +1632,94 @@ body {
         height: 36px;
     }
 }
+
+/* ============================================
+   文件上传显示样式
+   ============================================ */
+
+.upload-container {
+    position: relative;
+    flex: 1;
+}
+
+.file-display {
+    display: none;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.file-display:hover {
+    border-color: rgba(168, 85, 247, 0.6);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.file-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.file-name {
+    flex: 1;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.file-remove {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.file-remove:hover {
+    background: rgba(239, 68, 68, 0.4);
+    transform: scale(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .file-name {
+        font-size: 14px;
+        max-width: 150px;
+    }
+    
+    .file-icon {
+        font-size: 20px;
+    }
+    
+    .file-remove {
+        width: 24px;
+        height: 24px;
+        font-size: 18px;
+    }
+}

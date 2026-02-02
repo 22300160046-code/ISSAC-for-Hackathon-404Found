@@ -91,11 +91,27 @@
             
             <div class="input-group">
                 <input type="text" id="urlInput" class="input-field" placeholder="paste the target's URL here">
-                <button class="input-field upload-btn" onclick="openFileUpload()">
-                    <span>upload the target's PD here</span>
-                    <input type="file" id="fileInput" accept=".doc,.docx,.txt,.pdf" style="display: none;">
-                </button>
-                <button class="btn-go" onclick="scrollToSection('loading')">GO</button>
+                
+                <div class="upload-container">
+                    <!-- 上传按钮 -->
+                    <button class="input-field upload-btn" onclick="triggerFileUpload()">
+                        <span>upload the target's PD here</span>
+                    </button>
+                    
+                    <!-- 文件显示区域 -->
+                    <div class="file-display" id="fileDisplay">
+                        <div class="file-info">
+                            <span class="file-icon" id="fileIcon">📄</span>
+                            <span class="file-name" id="fileName">filename.pdf</span>
+                            <button class="file-remove" onclick="removeFile()" title="移除文件">×</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 隐藏的文件输入 -->
+                    <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt,.md" style="display: none;" onchange="handleFileSelect(event)">
+                </div>
+                
+                <button class="btn-go" onclick="startEvaluation()">GO</button>
             </div>
         </div>
     </section>

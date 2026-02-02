@@ -792,3 +792,142 @@ Vercel Labs 团队，具备前端基础设施、CLI 工具链与 AI 工程化交
     
     document.body.appendChild(modal);
 }
+// ============================================
+// 文件上传和URL输入功能
+// ============================================
+
+// 全局变量存储用户输入
+let uploadedFile = null;
+let projectUrl = '';
+
+// 触发文件选择
+function triggerFileUpload() {
+    document.getElementById('fileInput').click();
+}
+
+// 处理文件选择
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
+        uploadedFile = file;
+        displayFile(file);
+    }
+}
+
+// 显示已选择的文件
+function displayFile(file) {
+    const fileDisplay = document.getElementById('fileDisplay');
+    const fileName = document.getElementById('fileName');
+    const fileIcon = document.getElementById('fileIcon');
+    const uploadBtn = document.querySelector('.upload-btn');
+    
+    // 根据文件类型设置图标
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    const iconMap = {
+        'pdf': '📕',
+        'doc': '📘',
+        'docx': '📘',
+        'txt': '📄',
+        'md': '📝'
+    };
+    
+    fileIcon.textContent = iconMap[fileExtension] || '📄';
+    fileName.textContent = file.name;
+    
+    // 隐藏上传按钮,显示文件信息
+    uploadBtn.style.display = 'none';
+    fileDisplay.style.display = 'flex';
+}
+
+// 移除文件
+function removeFile() {
+    uploadedFile = null;
+    document.getElementById('fileInput').value = '';
+    document.getElementById('fileDisplay').style.display = 'none';
+    document.querySelector('.upload-btn').style.display = 'flex';
+}
+
+// 开始评估 - 收集用户输入并调用后端接口
+function startEvaluation() {
+    // 获取URL输入
+    projectUrl = document.getElementById('urlInput').value.trim();
+    
+    // 验证输入
+    if (!projectUrl && !uploadedFile) {
+        alert('请至少输入项目URL或上传项目文档！');
+        return;
+    }
+    
+    // 准备数据
+    const evaluationData = {
+        url: projectUrl,
+        file: uploadedFile,
+        timestamp: new Date().toISOString()
+    };
+    
+    // 调用后端接口 - 这里预留接口给后端代码
+    // 后端开发者可以通过以下方式获取数据:
+    // 1. evaluationData.url - 用户输入的GitHub URL
+    // 2. evaluationData.file - 用户上传的文件对象
+    
+    console.log('评估数据:', evaluationData);
+    console.log('项目URL:', projectUrl);
+    console.log('上传文件:', uploadedFile);
+    
+    // TODO: 后端接口调用
+    // 示例: await callBackendAPI(evaluationData);
+    // 或者: submitEvaluationRequest(projectUrl, uploadedFile);
+    
+    // 暂时使用模拟流程,跳转到加载页面
+    scrollToSection('loading');
+}
+
+// ============================================
+// 后端接口预留函数
+// ============================================
+
+/**
+ * 后端开发者可以实现这个函数来处理评估请求
+ * @param {string} url - GitHub项目URL
+ * @param {File} file - 上传的项目文档文件
+ * @returns {Promise} - 返回评估结果
+ */
+async function callBackendAPI(url, file) {
+    // 创建FormData对象
+    const formData = new FormData();
+    formData.append('url', url);
+    if (file) {
+        formData.append('file', file);
+    }
+    
+    // 发送到后端API
+    try {
+        const response = await fetch('/api/evaluate', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('评估请求失败');
+        }
+        
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('后端API调用失败:', error);
+        throw error;
+    }
+}
+
+/**
+ * 获取当前用户输入的数据
+ * 后端可以调用这个函数来获取前端收集的数据
+ */
+function getEvaluationData() {
+    return {
+        url: projectUrl,
+        file: uploadedFile,
+        hasUrl: !!projectUrl,
+        hasFile: !!uploadedFile
+    };
+}
