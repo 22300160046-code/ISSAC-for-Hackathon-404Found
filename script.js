@@ -1109,7 +1109,8 @@ window.scrollToSection = function(sectionId) {
 
 /**
  * 模拟后端完成 - 供测试使用
- *// 测试按钮：显示手动输入界面
+ */
+// 测试按钮：显示手动输入界面
 function simulateBackendComplete() {
     console.log('🧪 测试按钮被点击，显示手动输入界面');
     showManualInputModal();
@@ -1238,10 +1239,6 @@ function submitManualInput() {
     closeModal('scoreModal');
     
     // 调用后端完成回调
-    setTimeout(() => {
-        onBackendComplete(mockResult);
-    }, 500);
-}    // 调用后端完成回调
     setTimeout(() => {
         onBackendComplete(mockResult);
     }, 500);
