@@ -32,11 +32,11 @@ function startLoadingAnimation() {
         
         if (progress >= 100) {
             clearInterval(progressInterval);
-            // Auto scroll to results after completion
-            setTimeout(() => {
-                scrollToSection('results');
-                loadingStarted = false; // Reset for next time
-            }, 500);
+            // 禁用旧的自动跳转，由智能进度条系统控制
+            // setTimeout(() => {
+            //     scrollToSection('results');
+            //     loadingStarted = false; // Reset for next time
+            // }, 500);
         }
     }, 50);
     
@@ -980,6 +980,9 @@ function startSmartProgress() {
     progressStartTime = Date.now();
     evaluationResult = null;
     
+    // 初始化状态文字
+    updateStatusMessage('正在初始化评估引擎...');
+    
     updateProgressUI();
     animateProgress();
 }
@@ -1056,7 +1059,15 @@ function animateProgress() {
         
         // 0.5秒后跳转到结果页
         setTimeout(() => {
-            scrollToSection('results');
+            // 使用原始的scrollToSection函数，避免触发startSmartProgress
+            if (originalScrollToSection) {
+                originalScrollToSection('results');
+            } else {
+                const section = document.getElementById('results');
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         }, 500);
         
         return;
@@ -1216,3 +1227,139 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleTestButton(false);
     }
 });
+
+// ============================================
+// 显示评估结果
+// ============================================
+
+/**
+ * 显示评估结果 - 在评估完成后调用
+ * @param {Object} results - 评估结果对象
+ */
+function showEvaluationResults(results) {
+    console.log('显示评估结果:', results);
+    
+    // 默认结果（如果没有提供）
+    const defaultResults = {
+        codeQuality: 87,
+        businessPotential: 78,
+        technicalInnovation: 85,
+        socialImpact: 82
+    };
+    
+    const scores = results || defaultResults;
+    
+    // 更新每个评分卡片
+    updateScoreCard('code', scores.codeQuality);
+    updateScoreCard('business', scores.businessPotential);
+    updateScoreCard('innovation', scores.technicalInnovation);
+    updateScoreCard('social', scores.socialImpact);
+}
+
+/**
+ * 更新单个评分卡片
+ * @param {string} scoreId - 评分ID (code, business, innovation, social)
+ * @param {number} score - 评分值 (0-100)
+ */
+function updateScoreCard(scoreId, score) {
+    const card = document.querySelector(`[data-score-id="${scoreId}"]`);
+    if (!card) return;
+    
+    const valueElement = card.querySelector('.score-value');
+    const fillElement = card.querySelector('.score-fill');
+    
+    if (valueElement) {
+        // 添加动画效果
+        valueElement.style.transition = 'opacity 0.3s ease';
+        valueElement.style.opacity = '0';
+        
+        setTimeout(() => {
+            valueElement.textContent = score + '%';
+            valueElement.style.opacity = '1';
+        }, 300);
+    }
+    
+    if (fillElement) {
+        // 延迟300ms后开始进度条动画
+        setTimeout(() => {
+            fillElement.style.transition = 'width 1s ease-out';
+            fillElement.style.width = score + '%';
+        }, 300);
+    }
+}
+
+/**
+ * 重置评分卡片为待评估状态
+ */
+function resetScoreCards() {
+    const scoreIds = ['code', 'business', 'innovation', 'social'];
+    
+    scoreIds.forEach(scoreId => {
+        const card = document.querySelector(`[data-score-id="${scoreId}"]`);
+        if (!card) return;
+        
+        const valueElement = card.querySelector('.score-value');
+        const fillElement = card.querySelector('.score-fill');
+        
+        if (valueElement) {
+            valueElement.textContent = '待评估';
+        }
+        
+        if (fillElement) {
+            fillElement.style.transition = 'none';
+            fillElement.style.width = '0%';
+        }
+    });
+}
+
+// 修改onBackendComplete函数，在跳转前显示结果
+const originalOnBackendComplete = window.onBackendComplete;
+window.onBackendComplete = function(result) {
+    console.log('收到后端评估结果:', result);
+    progressState = 'RECEIVED';
+    evaluationResult = result;
+    updateStatusMessage('收到评估结果，正在完成...', 'completed');
+    
+    // 在跳转到结果页之前，先更新评分数据
+    if (result && result.scores) {
+        // 延迟显示结果，确保跳转动画完成后再显示
+        setTimeout(() => {
+            showEvaluationResults(result.scores);
+        }, 1000);
+    }
+};
+
+// 修改showScoreDetail函数，在未评估时显示提示
+const originalShowScoreDetail = window.showScoreDetail;
+window.showScoreDetail = function(type) {
+    // 检查是否已评估
+    const card = document.querySelector(`[data-score-id="${type}"]`);
+    if (card) {
+        const valueElement = card.querySelector('.score-value');
+        if (valueElement && valueElement.textContent === '待评估') {
+            // 显示待评估提示
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            
+            if (modal && modalContent) {
+                modalContent.innerHTML = `
+                    <div style="text-align: center; padding: 60px 40px;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">⏳</div>
+                        <h2 style="font-size: 2rem; margin-bottom: 15px; color: #a855f7;">待评估</h2>
+                        <p style="font-size: 1.1rem; color: #999; line-height: 1.8;">
+                            该维度的评估尚未完成<br>
+                            请先上传项目并等待评估完成
+                        </p>
+                    </div>
+                `;
+                modal.style.display = 'flex';
+            }
+            return;
+        }
+    }
+    
+    // 如果已评估，调用原函数
+    if (originalShowScoreDetail) {
+        originalShowScoreDetail(type);
+    }
+};

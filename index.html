@@ -180,7 +180,7 @@
                 <div class="progress-text" id="progressText">0%</div>
             </div>
             
-            <div class="progress-status" id="progressStatus">正在初始化评估引擎...</div>
+            <div class="progress-status" id="progressStatus">请先上传链接和文件</div>
             
             <!-- 测试按钮 -->
             <button class="btn-test" id="testButton" onclick="simulateBackendComplete()">🧪 模拟后端完成</button>
@@ -213,47 +213,47 @@
                     <div class="scores-section">
                         <h3 class="scores-title">📊 Evaluation Scores</h3>
                         <div class="score-cards">
-                            <div class="score-card" onclick="showScoreDetail('code')">
+                            <div class="score-card" data-score-id="code" onclick="showScoreDetail('code')">
                                 <div class="score-header">
                                     <span class="score-icon">💻</span>
                                     <span class="score-name">Code Quality</span>
                                 </div>
-                                <div class="score-value">87%</div>
+                                <div class="score-value" data-score-value="87">待评估</div>
                                 <div class="score-bar">
-                                    <div class="score-fill" style="width: 87%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                                    <div class="score-fill" data-score-width="87" style="width: 0%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-card" onclick="showScoreDetail('business')">
+                            <div class="score-card" data-score-id="business" onclick="showScoreDetail('business')">
                                 <div class="score-header">
                                     <span class="score-icon">💼</span>
                                     <span class="score-name">Business Potential</span>
                                 </div>
-                                <div class="score-value">78%</div>
+                                <div class="score-value" data-score-value="78">待评估</div>
                                 <div class="score-bar">
-                                    <div class="score-fill" style="width: 78%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+                                    <div class="score-fill" data-score-width="78" style="width: 0%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-card" onclick="showScoreDetail('innovation')">
+                            <div class="score-card" data-score-id="innovation" onclick="showScoreDetail('innovation')">
                                 <div class="score-header">
                                     <span class="score-icon">🚀</span>
                                     <span class="score-name">Technical Innovation</span>
                                 </div>
-                                <div class="score-value">85%</div>
+                                <div class="score-value" data-score-value="85">待评估</div>
                                 <div class="score-bar">
-                                    <div class="score-fill" style="width: 85%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+                                    <div class="score-fill" data-score-width="85" style="width: 0%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
                                 </div>
                             </div>
                             
-                            <div class="score-card" onclick="showScoreDetail('social')">
+                            <div class="score-card" data-score-id="social" onclick="showScoreDetail('social')">
                                 <div class="score-header">
                                     <span class="score-icon">🌍</span>
                                     <span class="score-name">Social Impact</span>
                                 </div>
-                                <div class="score-value">82%</div>
+                                <div class="score-value" data-score-value="82">待评估</div>
                                 <div class="score-bar">
-                                    <div class="score-fill" style="width: 82%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+                                    <div class="score-fill" data-score-width="82" style="width: 0%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
                                 </div>
                             </div>
                         </div>
